@@ -36,6 +36,8 @@ namespace RegularExpressions
         #region Public Properties
 
         public TextBox MyTextBox { get; }
+        
+        public DataGrid MyDataGrid { get; }
 
         public ICommand FindCommand { get; set; }
 
@@ -164,9 +166,10 @@ namespace RegularExpressions
 
         #region Constructor
 
-        public MainViewModel(TextBox myTextBox)
+        public MainViewModel(TextBox myTextBox, DataGrid myDataGrid)
         {
             MyTextBox = myTextBox;
+            MyDataGrid = myDataGrid;
         }
         #endregion
 
@@ -190,6 +193,8 @@ namespace RegularExpressions
             currentIndex++;
             currentIndex %= ResultList.Count;
             SelectedResult = ResultList.ElementAt(currentIndex);
+            MyDataGrid.UpdateLayout();
+            MyDataGrid.ScrollIntoView(MyDataGrid.SelectedItem);
         }
 
         private void FindPreviousWordCommandExecute()
@@ -200,6 +205,8 @@ namespace RegularExpressions
                 currentIndex = ResultList.Count - 1;
             }
             SelectedResult = ResultList.ElementAt(currentIndex);
+            MyDataGrid.UpdateLayout();
+            MyDataGrid.ScrollIntoView(MyDataGrid.SelectedItem);
         }
 
         private void FindCommandExecute()
