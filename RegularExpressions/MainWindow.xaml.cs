@@ -10,7 +10,7 @@ namespace RegularExpressions
         public MainWindow()
         {
             InitializeComponent();
-            var viewModel = new MainViewModel(MyTextBox);
+            var viewModel = new MainViewModel(MyTextBox, MyDataGrid);
             viewModel.Load();
             DataContext = viewModel;
         }
