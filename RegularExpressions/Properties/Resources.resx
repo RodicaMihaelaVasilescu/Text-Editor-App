@@ -120,4 +120,7 @@
   <data name="TextNotFoundError" xml:space="preserve">
     <value>Text not found</value>
   </data>
+  <data name="InvalidRegexError" xml:space="preserve">
+    <value>Invalid regex</value>
+  </data>
 </root>
