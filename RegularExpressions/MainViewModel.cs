@@ -214,11 +214,22 @@ namespace RegularExpressions
             File.WriteAllText(expressionPath, Expression);
             ResultList = new ObservableCollection<string>();
 
-            MatchCollection matches = Regex.Matches(Text, IsWholeWordMatched ? string.Format(@"\b{0}\b", Expression) : Expression, IsCaseSensitive ? RegexOptions.None : RegexOptions.IgnoreCase);
-
-            foreach (Match m in matches)
+            MatchCollection matches = null;
+            try
             {
-                ResultList.Add(String.Format("Found '{0}' at position {1}", m.Value, m.Index));
+                matches = Regex.Matches(Text, IsWholeWordMatched ? string.Format(@"\b{0}\b", Expression) : Expression, IsCaseSensitive ? RegexOptions.None : RegexOptions.IgnoreCase);
+            }
+            catch
+            {
+                //Invalid pattern
+            }
+
+            if (matches != null)
+            {
+                foreach (Match m in matches)
+                {
+                    ResultList.Add(String.Format("Found '{0}' at position {1}", m.Value, m.Index));
+                }
             }
 
             if (ResultList.Any())
