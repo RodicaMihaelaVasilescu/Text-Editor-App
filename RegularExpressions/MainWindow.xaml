@@ -43,11 +43,13 @@
             
             <Label Content="{Binding NumberOfWordsAndCharacters, UpdateSourceTrigger=PropertyChanged}" />
             
-            <DataGrid ItemsSource="{Binding ResultList}"  Height="120"
+            <DataGrid Name="MyDataGrid" 
+                      ItemsSource="{Binding ResultList}"
+                      Height="120"
+                      RowHeight="17"
                       SelectedItem="{Binding SelectedResult}" Background="Transparent"
                       AutoGenerateColumns="False"
                       RowBackground="Transparent"
-                      RowHeight="17"
                       IsReadOnly="True"
                       GridLinesVisibility="None">
                 <DataGrid.Columns>
