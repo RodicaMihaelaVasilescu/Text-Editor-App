@@ -221,7 +221,9 @@ namespace RegularExpressions
             }
             catch
             {
-                //Invalid pattern
+                ClearFields();
+                ResultsText = Resources.InvalidRegexError;
+                return;
             }
 
             if (matches != null)
