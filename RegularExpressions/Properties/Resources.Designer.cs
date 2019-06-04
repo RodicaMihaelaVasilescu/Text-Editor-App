@@ -68,5 +68,16 @@ namespace RegularExpressions.Properties {
                 return ResourceManager.GetString("TextNotFoundError", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid regex.
+        /// </summary>
+        internal static string InvalidRegexError
+        {
+            get
+            {
+                return ResourceManager.GetString("InvalidRegexError", resourceCulture);
+            }
+        }
     }
 }
