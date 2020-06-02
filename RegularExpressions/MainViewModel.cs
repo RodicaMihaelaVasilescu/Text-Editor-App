@@ -113,6 +113,7 @@ namespace RegularExpressions
             {
                 if (value == _isCaseSensitive) return;
                 _isCaseSensitive = value;
+                FindCommandExecute();
                 OnPropertyChanged(nameof(IsCaseSensitive));
             }
         }
@@ -124,6 +125,7 @@ namespace RegularExpressions
             {
                 if (value == _isWholeWordMatched) return;
                 _isWholeWordMatched = value;
+                FindCommandExecute();
                 OnPropertyChanged(nameof(IsWholeWordMatched));
             }
         }
@@ -136,6 +138,7 @@ namespace RegularExpressions
                 if (value == _areWhiteSpacesCounted) return;
                 _areWhiteSpacesCounted = value;
                 CountNumberOfCharactersAndWords();
+                FindCommandExecute();
                 OnPropertyChanged(nameof(AreWhiteSpacesCounted));
             }
         }
@@ -184,11 +187,8 @@ namespace RegularExpressions
             Text = File.ReadAllText(textPath);
             Expression = File.ReadAllText(expressionPath);
         }
-        #endregion
 
-        #region Private Methods
-
-        private void FindNextWordCommandExecute()
+        public void FindNextWordCommandExecute()
         {
             currentIndex++;
             currentIndex %= ResultList.Count;
@@ -197,7 +197,7 @@ namespace RegularExpressions
             MyDataGrid.ScrollIntoView(MyDataGrid.SelectedItem);
         }
 
-        private void FindPreviousWordCommandExecute()
+        public void FindPreviousWordCommandExecute()
         {
             currentIndex--;
             if (currentIndex < 0)
@@ -209,7 +209,7 @@ namespace RegularExpressions
             MyDataGrid.ScrollIntoView(MyDataGrid.SelectedItem);
         }
 
-        private void FindCommandExecute()
+        public void FindCommandExecute()
         {
             if (Text == null || Expression == string.Empty)
             {
@@ -255,6 +255,10 @@ namespace RegularExpressions
             }
         }
 
+        #endregion
+        
+        #region Private Methods
+        
         private void ClearFields()
         {
             ResultList.Clear();

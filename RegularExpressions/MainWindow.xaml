@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         WindowState="Maximized"
+        Loaded="Window_Loaded"
         Title="Regular Expressions" Height="500" Width="800">
 
     <Window.Background>
@@ -31,7 +32,8 @@
                   TextWrapping="Wrap"
                   TextAlignment="Left"
                   IsReadOnly="False"
-                  AcceptsReturn="True" >
+                  PreviewKeyDown="MainWindow_KeyDown"
+                  AcceptsReturn="True">
             </TextBox>
 
             <Label Content="Options" />
