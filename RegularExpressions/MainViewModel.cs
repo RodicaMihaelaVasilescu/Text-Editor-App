@@ -30,13 +30,16 @@ namespace RegularExpressions
         private bool _areWhiteSpacesCounted;
         private bool _arePrevAndNextButtonsEnabled;
         private ObservableCollection<string> _resultList;
+        private string _totalResults;
 
         #endregion
 
         #region Public Properties
 
         public TextBox MyTextBox { get; }
-        
+
+        public TextBox MySearchTextBox { get; }
+
         public DataGrid MyDataGrid { get; }
 
         public ICommand FindCommand { get; set; }
@@ -52,6 +55,8 @@ namespace RegularExpressions
             {
                 if (value == _expression) return;
                 _expression = value;
+                FindCommandExecute();
+                MySearchTextBox.Focus();
                 OnPropertyChanged(nameof(Expression));
             }
         }
@@ -79,6 +84,7 @@ namespace RegularExpressions
                 {
                     MyTextBox.Focus();
                     MyTextBox.Select(Int32.Parse(value.Split(' ').Last()), Expression.Length);
+                    ResultsText = String.Format("Results: {0}/ {1}", currentIndex + 1, ResultList.Count);
                 }
                 OnPropertyChanged(nameof(SelectedResult));
             }
@@ -92,6 +98,17 @@ namespace RegularExpressions
                 if (value == _resultsText) return;
                 _resultsText = value;
                 OnPropertyChanged(nameof(ResultsText));
+            }
+        }
+
+        public string TotalResults
+        {
+            get { return _totalResults; }
+            set
+            {
+                if (value == _totalResults) return;
+                _totalResults = value;
+                OnPropertyChanged(nameof(TotalResults));
             }
         }
 
@@ -164,13 +181,14 @@ namespace RegularExpressions
                 OnPropertyChanged(nameof(ResultList));
             }
         }
-        
+
         #endregion
 
         #region Constructor
 
-        public MainViewModel(TextBox myTextBox, DataGrid myDataGrid)
+        public MainViewModel(TextBox mySearchTextBox, TextBox myTextBox, DataGrid myDataGrid)
         {
+            MySearchTextBox = mySearchTextBox;
             MyTextBox = myTextBox;
             MyDataGrid = myDataGrid;
         }
@@ -241,9 +259,10 @@ namespace RegularExpressions
                 }
             }
 
+            TotalResults = string.Format("Total results: {0}", ResultList != null ? ResultList.Count : 0);
             if (ResultList.Any())
             {
-                ResultsText = String.Format("{0} results found", ResultList.Count);
+                ResultsText = String.Format("Results: {0}/ {1}", currentIndex, ResultList.Count);
                 SelectedResult = ResultList.First();
                 currentIndex = 0;
                 ArePrevAndNextButtonsEnabled = true;
@@ -256,13 +275,14 @@ namespace RegularExpressions
         }
 
         #endregion
-        
+
         #region Private Methods
-        
+
         private void ClearFields()
         {
             ResultList.Clear();
             ResultsText = string.Empty;
+            TotalResults = string.Format("Total results: {0}", ResultList != null ? ResultList.Count : 0);
             ArePrevAndNextButtonsEnabled = false;
             currentIndex = 0;
         }

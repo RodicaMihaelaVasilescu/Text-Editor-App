@@ -13,11 +13,10 @@ namespace RegularExpressions
         public MainWindow()
         {
             InitializeComponent();
-            viewModel = new MainViewModel(MyTextBox, MyDataGrid);
+            viewModel = new MainViewModel(SearchTextBox, MyTextBox, MyDataGrid);
             viewModel.Load();
             DataContext = viewModel;
             viewModel.FindCommandExecute();
-            MyTextBox.Focus();
         }
 
         /// <summary>
@@ -26,6 +25,11 @@ namespace RegularExpressions
         /// </summary>
         void MainWindow_KeyDown(object sender, KeyEventArgs e)
         {
+            if (e.Key >= Key.A && e.Key <= Key.Z && MyTextBox.IsFocused == false)
+            {
+                SearchTextBox.Focus();
+                return;
+            }
             switch (e.Key)
             {
                 case Key.Down:
