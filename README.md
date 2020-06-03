@@ -6,7 +6,7 @@ Write an application that will extract sub-strings from source string, based on 
 ### Text Patterns and Matches
 A regular expression, or regex for short, is a pattern describing a certain amount of text.
 
-![alt text](Demo/ApplicationOverview.jpg)
+![alt text](Demo/ApplicationOverview.gif)
 
 ### Useful Links
 - https://docs.oracle.com/cd/E20593_01/doc.560/e23601/app_regexp.htm
