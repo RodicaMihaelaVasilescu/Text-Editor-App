@@ -84,6 +84,7 @@ namespace RegularExpressions
                 {
                     MyTextBox.Focus();
                     MyTextBox.Select(Int32.Parse(value.Split(' ').Last()), Expression.Length);
+                    currentIndex = ResultList.IndexOf(value);
                     ResultsText = String.Format("Results: {0}/ {1}", currentIndex + 1, ResultList.Count);
                 }
                 OnPropertyChanged(nameof(SelectedResult));
