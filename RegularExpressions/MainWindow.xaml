@@ -25,12 +25,32 @@
             <Separator />
 
             <Label Content="Search:" FontSize="15" />
-            <TextBox x:Name="SearchTextBox" Margin="5,0" Text="{Binding Expression, UpdateSourceTrigger=PropertyChanged}">
-                <TextBox.InputBindings>
-                    <KeyBinding Key="Enter" Command="{Binding Path=FindCommand}" />
-                </TextBox.InputBindings>
-            </TextBox>
+            <Grid>
+                <TextBox
+                    x:Name="SearchTextBox"
+                    Margin="5,5"
+                    HorizontalAlignment="Stretch"
+                    VerticalContentAlignment="Center"
+                    Text="{Binding Expression, UpdateSourceTrigger=PropertyChanged}">
+                    <TextBox.InputBindings>
+                        <KeyBinding Key="Enter" Command="{Binding Path=FindCommand}" />
+                    </TextBox.InputBindings>
+                </TextBox>
+                <Button
+                    Width="30"
+                    Height="30"
+                    HorizontalAlignment="Right"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Command="{Binding FindCommand}">
+                    <Image
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Cursor="Hand"
+                        Source="/RegularExpressions;component/Images/search_icon.png" />
 
+                </Button>
+            </Grid>
             <Label Content="Text:" FontSize="15" />
             <TextBox
                 Name="MyTextBox"
@@ -43,32 +63,50 @@
                 Text="{Binding Text, UpdateSourceTrigger=PropertyChanged}"
                 TextAlignment="Left"
                 TextWrapping="Wrap"
-                VerticalScrollBarVisibility="Visible" />
+                VerticalScrollBarVisibility="Auto" />
 
             <StackPanel Margin="5,0">
-                <Label Content="Options:" />
+                <DockPanel>
+                    <Label Content="Options:" />
+                    <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                        <Button
+                            Width="85"
+                            Height="20"
+                            HorizontalAlignment="Center"
+                            Command="{Binding ImportDocumentCommand}"
+                            Content="Import"
+                            Cursor="Hand" />
+
+                        <Button
+                            Width="85"
+                            Height="20"
+                            Margin="10,0,0,0"
+                            HorizontalAlignment="Right"
+                            Command="{Binding SaveDocumentCommand}"
+                            Content="Save"
+                            Cursor="Hand"
+                            IsEnabled="{Binding IsSaveDocumentEnabled}" />
+                    </StackPanel>
+                </DockPanel>
                 <CheckBox
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center"
                     Content="Case sensitive"
+                    Cursor="Hand"
                     IsChecked="{Binding IsCaseSensitive}" />
                 <CheckBox
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center"
                     Content="Match whole word"
+                    Cursor="Hand"
                     IsChecked="{Binding IsWholeWordMatched}" />
                 <CheckBox
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center"
                     Content="Count white spaces"
+                    Cursor="Hand"
                     IsChecked="{Binding AreWhiteSpacesCounted}" />
             </StackPanel>
-            <Button
-                Width="85"
-                Height="20"
-                HorizontalAlignment="Right"
-                Command="{Binding FindCommand}"
-                Content="Find" />
 
             <Label Content="{Binding NumberOfWordsAndCharacters, UpdateSourceTrigger=PropertyChanged}" />
 
@@ -85,12 +123,10 @@
                     RowHeight="17"
                     SelectedItem="{Binding SelectedResult}">
                     <DataGrid.Columns>
-                        <DataGridTextColumn
-                            Width="*"
-                            Binding="{Binding}">
+                        <DataGridTextColumn Width="*" Binding="{Binding}">
                             <DataGridTextColumn.HeaderTemplate>
                                 <DataTemplate>
-                                    <TextBlock  Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}, Path=DataContext.ResultsText}" />
+                                    <TextBlock Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}, Path=DataContext.ResultsText}" />
                                 </DataTemplate>
                             </DataGridTextColumn.HeaderTemplate>
                         </DataGridTextColumn>
@@ -109,37 +145,37 @@
                     </DataGrid.CellStyle>
                 </DataGrid>
 
-                <StackPanel
-                    Margin="0,10,0,0"
-                    HorizontalAlignment="Right"
-                    Orientation="Horizontal">
-                    <Button
-                        Width="85"
-                        Height="20"
-                        HorizontalAlignment="Right"
-                        Command="{Binding FindPreviousWordCommand}"
-                        Content="Previous"
-                        IsEnabled="{Binding ArePrevAndNextButtonsEnabled}" />
-                    <Button
-                        Width="85"
-                        Height="20"
-                        Margin="10,0,0,0"
-                        HorizontalAlignment="Right"
-                        Command="{Binding FindNextWordCommand}"
-                        Content="Next"
-                        IsEnabled="{Binding ArePrevAndNextButtonsEnabled}" />
-                </StackPanel>
-
-                <Label Content="{Binding TotalResults}" />
+                <DockPanel Margin="0,10,0,0" HorizontalAlignment="Stretch">
+                    <Label HorizontalAlignment="Left" Content="{Binding TotalResults}" />
+                    <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                        <Button
+                            Width="85"
+                            Height="20"
+                            HorizontalAlignment="Right"
+                            Command="{Binding FindPreviousWordCommand}"
+                            Content="Previous"
+                            Cursor="Hand"
+                            IsEnabled="{Binding ArePrevAndNextButtonsEnabled}" />
+                        <Button
+                            Width="85"
+                            Height="20"
+                            Margin="10,0,0,0"
+                            HorizontalAlignment="Right"
+                            Command="{Binding FindNextWordCommand}"
+                            Content="Next"
+                            Cursor="Hand"
+                            IsEnabled="{Binding ArePrevAndNextButtonsEnabled}" />
+                    </StackPanel>
+                </DockPanel>
             </StackPanel>
-            <Image
+            <!--<Image
                 Grid.Row="1"
                 Width="60"
                 Height="60"
                 Margin="0,20,0,0"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Top"
-                Source="/RegularExpressions;component/Images/pink_butterfly.png" />
+                Source="/RegularExpressions;component/Images/pink_butterfly.png" />-->
 
         </StackPanel>
     </ScrollViewer>

@@ -31,6 +31,8 @@ namespace RegularExpressions
         private bool _arePrevAndNextButtonsEnabled;
         private ObservableCollection<string> _resultList;
         private string _totalResults;
+        private string openedFile;
+        private bool _isSaveDocumentEnabled;
 
         #endregion
 
@@ -47,6 +49,11 @@ namespace RegularExpressions
         public ICommand FindPreviousWordCommand { get; set; }
 
         public ICommand FindNextWordCommand { get; set; }
+
+        public ICommand ImportDocumentCommand { get; set; }
+
+        public ICommand SaveDocumentCommand { get; set; }
+
 
         public string Expression
         {
@@ -161,6 +168,17 @@ namespace RegularExpressions
             }
         }
 
+        public bool IsSaveDocumentEnabled
+        {
+            get { return _isSaveDocumentEnabled; }
+            set
+            {
+                if (value == _isSaveDocumentEnabled) return;
+                _isSaveDocumentEnabled = value;
+                OnPropertyChanged(nameof(IsSaveDocumentEnabled));
+            }
+        }
+
         public bool ArePrevAndNextButtonsEnabled
         {
             get { return _arePrevAndNextButtonsEnabled; }
@@ -203,8 +221,33 @@ namespace RegularExpressions
             FindCommand = new RelayCommand(FindCommandExecute);
             FindPreviousWordCommand = new RelayCommand(FindPreviousWordCommandExecute);
             FindNextWordCommand = new RelayCommand(FindNextWordCommandExecute);
+            ImportDocumentCommand = new RelayCommand(ImportDocumentCommandExecute);
+            SaveDocumentCommand = new RelayCommand(SaveDocumentCommandExecute);
             Text = File.ReadAllText(textPath);
             Expression = File.ReadAllText(expressionPath);
+        }
+
+        public void ImportDocumentCommandExecute()
+        {
+            Microsoft.Win32.OpenFileDialog dialog = new Microsoft.Win32.OpenFileDialog
+            {
+                Filter = "All files (*.*)|*.*|PNG files (*.png)|*.png*|JPG files (*.jpg)|*.jpg*"
+            };
+            dialog.ShowDialog();
+
+            openedFile = dialog.FileName;
+            if (string.IsNullOrEmpty(openedFile))
+            {
+                return;
+            }
+            IsSaveDocumentEnabled = true;
+            Text = File.ReadAllText(openedFile);
+        }
+
+        public void SaveDocumentCommandExecute()
+        {
+            File.WriteAllText(openedFile, Text);
+
         }
 
         public void FindNextWordCommandExecute()
